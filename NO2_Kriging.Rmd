@@ -1,0 +1,21 @@
+---
+title: "Kriging Interpolation with NO2 Station data"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(scipen = 100)
+memory.size()
+memory.limit(99999)
+
+library(tidyverse)
+library(sf)
+library(raster)
+library(rgdal)
+library(automap)
+library(gridExtra)
+```
+
+## GitHub Documents
+

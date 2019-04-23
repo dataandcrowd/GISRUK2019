@@ -6,6 +6,7 @@ library(sf)
 library(raster)
 library(rgdal)
 library(automap)
+library(gridExtra)
 
 load("data/no2_jan.RData")
 
@@ -18,7 +19,6 @@ coordinates(no2.winter) <- ~X+Y
 proj4string(no2.winter) <- CRS("+init=epsg:5181")
 
 #--Put Multiple Plots on a Single Page in R with spplot?--##
-#library(gridExtra)
 #plots <- lapply(names(no2.winter)[3:22], function(.x) spplot(no2.winter,.x))
 #do.call(grid.arrange,plots)
 
