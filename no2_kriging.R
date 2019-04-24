@@ -1,6 +1,7 @@
-options(scipen = 100)
-memory.size()
-memory.limit(99999)
+options(scipen = 100) # To see long decimal points
+memory.size() # for WindowsOS
+memory.limit(99999) # for WindowsOS
+
 library(tidyverse)
 library(sf)
 library(raster)
@@ -8,6 +9,27 @@ library(rgdal)
 library(automap)
 library(gridExtra)
 
+
+# set working directory so I know where the .zip file will be located
+getwd()
+#setwd(dir = "/some/path/")
+
+# on the GitHub repository of interest
+download.file(url = "https://github.com/mrsensible/GISRUK2019/archive/master.zip", 
+              destfile = "GISRUK2019-master.zip")
+
+# unzip the .zip file
+unzip(zipfile = "GISRUK2019-master.zip")
+
+# examine the contents
+list.files('./GISRUK2019-master')
+list.files('./GISRUK2019-master/data')
+
+# Set Workding Directory
+setwd('./GISRUK2019-master')
+
+
+# Load NO2 Pollution data
 load("data/no2_jan.RData")
 
 stations <- read_sf("data/stations_10km.shp")
