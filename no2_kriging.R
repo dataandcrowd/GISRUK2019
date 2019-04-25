@@ -75,6 +75,9 @@ sum.squares <- vector()
 var.model <- data.frame()
 pred.model <- seoul_grid@coords
 
+
+# This iteration takes 5 minutes!!
+
 for(i in 1:20) {
   kriging_new <- autoKrige(no2.winter@data[,i+2]~ X + Y,
                            nmax = 20000,
@@ -116,6 +119,8 @@ ras.krige.df %>%
   geom_path(data = seoul, aes(x = long, y = lat), color = 'black', size = 1) +
   geom_text(data = stat, aes(x = 187000,  y = 434000, label = paste0("mean = " , mean)), size = 3) + 
   geom_text(data = stat, aes(x = 184000,  y = 430500, label = paste0("sd = " , sd)), size = 3) + 
+  labs(title = "Kriging Interpolation for NO2 Mapping: An example of Seoul", 
+       subtitle = "Hourly data aggregated to Days and Nights") +
   facet_wrap(~ Hour, ncol = 8) +
   theme_bw() +
   theme(axis.title.x=element_blank(),
@@ -126,11 +131,15 @@ ras.krige.df %>%
         strip.text.x = element_text(size = 20),
         legend.title=element_text(size=15), 
         legend.text=element_text(size=15)                                  
-  ) # 1200 x 550 
+  ) -> final # 1200 x 550 
+
+# Export PNG
+png("plot.png", width=1200, height=550, res=100)
+final
+dev.off()
 
 
 # RMSE
-
 RMSE <- function(observed, predicted) {
   sqrt(mean((predicted - observed)^2, na.rm=TRUE))}
 
@@ -145,6 +154,6 @@ krige <- rasterFromXYZ(pred.model,
                        digits=5)
 
 # Write Raster
-#writeRaster(krige, filename="seoul_no2_multilayer.tif", options="INTERLEAVE=BAND", overwrite=TRUE)
+writeRaster(krige, filename="seoul_no2_multilayer.tif", options="INTERLEAVE=BAND", overwrite=TRUE)
 
 
